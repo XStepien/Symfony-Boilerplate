@@ -22,7 +22,7 @@ services:
     php-fpm:
         build:
             context: ./docker/php-fpm
-            dockerfile: Dockerfile-70
+            dockerfile: Dockerfile-56
         volumes_from:
             - volumes_source
         expose:
@@ -40,7 +40,7 @@ services:
         volumes_from:
             - volumes_source
         volumes:
-            - ./logs/nginx/:/var/log/nginx
+            - ./docker/logs/nginx/:/var/log/nginx
         ports:
             - "80:80"
             - "443:443"
@@ -57,7 +57,7 @@ services:
         volumes_from:
             - volumes_source
         volumes:
-            - ./logs/apache2:/var/log/apache2
+            - ./docker/logs/apache2:/var/log/apache2
         ports:
             - "80:80"
             - "443:443"
@@ -67,7 +67,7 @@ services:
 ### MySQL Container #########################################
 
     mysql:
-        build: ./mysql
+        build: ./docker/mysql
         volumes_from:
             - volumes_data
         ports:
@@ -83,12 +83,12 @@ services:
     volumes_source:
         image: tianon/true
         volumes:
-            - ../:/var/www/laravel
+            - ./:/var/www/symfony
 
 ### Databases Data Container ################################
 
     volumes_data:
         image: tianon/true
         volumes:
-            - ./data/mysql:/var/lib/mysql
-            - ./data/sessions:/sessions
+            - ./docker/data/mysql:/var/lib/mysql
+            - ./docker/data/sessions:/sessions
